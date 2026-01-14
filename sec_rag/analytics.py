@@ -35,13 +35,29 @@ def plot_theme_timeline(
         print(f"No data for theme {theme}")
         return
     
-    plt.figure(figsize=(12, 6))
+    # Adjust figure size based on number of tickers
+    num_tickers = len(theme_df["ticker"].unique())
+    fig_width = 14
+    fig_height = max(8, 6 + (num_tickers - 3) * 0.3)  # Scale height with more tickers
     
-    for ticker in theme_df["ticker"].unique():
+    plt.figure(figsize=(fig_width, fig_height))
+    
+    # Use a colormap for better color differentiation
+    colors = plt.cm.tab20(range(num_tickers))
+    
+    for idx, ticker in enumerate(sorted(theme_df["ticker"].unique())):
         ticker_data = theme_df[theme_df["ticker"] == ticker].sort_values("year")
         # Convert scores to percentages
         scores_pct = ticker_data["score"] * 100
-        plt.plot(ticker_data["year"], scores_pct, marker="o", label=ticker, linewidth=2)
+        plt.plot(
+            ticker_data["year"], 
+            scores_pct, 
+            marker="o", 
+            label=ticker, 
+            linewidth=2,
+            color=colors[idx % len(colors)],
+            markersize=4
+        )
     
     # Format x-axis as integers (no decimals)
     ax = plt.gca()
@@ -53,7 +69,14 @@ def plot_theme_timeline(
     plt.xlabel("Year", fontsize=12)
     plt.ylabel("Theme Score (%)", fontsize=12)
     plt.title(f"{theme} Risk Theme Over Time", fontsize=14, fontweight="bold")
-    plt.legend()
+    
+    # Adjust legend for many tickers
+    if num_tickers > 10:
+        # Place legend outside the plot area
+        plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left', fontsize=9, ncol=2)
+    else:
+        plt.legend(loc='best', fontsize=10)
+    
     plt.grid(True, alpha=0.3)
     plt.tight_layout()
     
@@ -88,8 +111,27 @@ def plot_theme_heatmap(
     
     pivot = year_df.pivot_table(index="ticker", columns="theme", values="score", aggfunc="mean")
     
-    plt.figure(figsize=(14, max(6, len(pivot) * 0.8)))
-    sns.heatmap(pivot, annot=True, fmt=".3f", cmap="YlOrRd", cbar_kws={"label": "Theme Score"})
+    # Convert scores to percentages for display
+    pivot_pct = pivot * 100
+    
+    # Adjust figure size based on number of tickers and themes
+    num_tickers = len(pivot)
+    num_themes = len(pivot.columns)
+    fig_width = max(14, num_themes * 1.2)
+    fig_height = max(8, num_tickers * 0.6)
+    
+    plt.figure(figsize=(fig_width, fig_height))
+    
+    # Use percentage format in annotations
+    sns.heatmap(
+        pivot_pct, 
+        annot=True, 
+        fmt=".1f", 
+        cmap="YlOrRd", 
+        cbar_kws={"label": "Theme Score (%)"},
+        linewidths=0.5,
+        linecolor='gray'
+    )
     plt.title(f"Risk Theme Scores by Company ({year})", fontsize=14, fontweight="bold")
     plt.xlabel("Theme", fontsize=12)
     plt.ylabel("Ticker", fontsize=12)

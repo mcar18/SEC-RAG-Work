@@ -18,17 +18,40 @@ from sec_rag.utils import get_filing_cache_key, normalize_cik
 
 # Simple ticker to CIK mapping for common companies
 # In production, you'd fetch this from SEC or use a proper mapping service
+# Top 20 largest US stocks by market cap (as of 2024)
 TICKER_TO_CIK: Dict[str, str] = {
-    "AAPL": "0000320193",
-    "MSFT": "0000789019",
-    "GOOGL": "0001652044",
-    "AMZN": "0001018724",
-    "META": "0001326801",
-    "TSLA": "0001318605",
-    "NVDA": "0001045810",
-    "JPM": "0000019617",
-    "V": "0001403161",
-    "JNJ": "0000200406",
+    # Technology
+    "AAPL": "0000320193",  # Apple Inc.
+    "MSFT": "0000789019",  # Microsoft Corporation
+    "NVDA": "0001045810",  # NVIDIA Corporation
+    "GOOGL": "0001652044",  # Alphabet Inc. (Class A)
+    "GOOG": "0001652044",   # Alphabet Inc. (Class C) - same CIK
+    "AMZN": "0001018724",  # Amazon.com Inc.
+    "META": "0001326801",  # Meta Platforms Inc.
+    "TSLA": "0001318605",  # Tesla, Inc.
+    "AVGO": "0001730168",  # Broadcom Inc.
+    "ORCL": "0001341439",  # Oracle Corporation
+    "ADBE": "0000796343",  # Adobe Inc.
+    # Financial Services
+    "JPM": "0000019617",   # JPMorgan Chase & Co.
+    "V": "0001403161",     # Visa Inc.
+    "MA": "0001141391",    # Mastercard Incorporated
+    "BAC": "0000010734",   # Bank of America Corp
+    # Healthcare
+    "JNJ": "0000200406",   # Johnson & Johnson
+    "UNH": "0000731766",   # UnitedHealth Group Inc.
+    "LLY": "0000059478",   # Eli Lilly and Company
+    # Consumer
+    "WMT": "0000104169",   # Walmart Inc.
+    "PG": "0000080424",    # Procter & Gamble Company
+    "HD": "0000354950",    # The Home Depot, Inc.
+    "COST": "0000909832",  # Costco Wholesale Corporation
+    "DIS": "0001001039",   # The Walt Disney Company
+    # Energy
+    "XOM": "0000034088",   # Exxon Mobil Corporation
+    # Conglomerate
+    "BRK.B": "0001067983", # Berkshire Hathaway Inc. (Class B)
+    "BRKB": "0001067983",  # Alternative format
 }
 
 

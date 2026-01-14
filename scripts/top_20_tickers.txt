@@ -1,0 +1,31 @@
+# Top 20 Largest US Stocks by Market Cap (2024)
+# Use these tickers for comprehensive analysis
+
+AAPL MSFT NVDA GOOGL AMZN META TSLA AVGO ORCL ADBE JPM V MA BAC JNJ UNH LLY WMT PG HD COST DIS XOM BRK.B
+
+# Alternative: All tickers on separate lines for easier copy-paste
+AAPL
+MSFT
+NVDA
+GOOGL
+AMZN
+META
+TSLA
+AVGO
+ORCL
+ADBE
+JPM
+V
+MA
+BAC
+JNJ
+UNH
+LLY
+WMT
+PG
+HD
+COST
+DIS
+XOM
+BRK.B
+
