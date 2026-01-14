@@ -39,10 +39,19 @@ def plot_theme_timeline(
     
     for ticker in theme_df["ticker"].unique():
         ticker_data = theme_df[theme_df["ticker"] == ticker].sort_values("year")
-        plt.plot(ticker_data["year"], ticker_data["score"], marker="o", label=ticker, linewidth=2)
+        # Convert scores to percentages
+        scores_pct = ticker_data["score"] * 100
+        plt.plot(ticker_data["year"], scores_pct, marker="o", label=ticker, linewidth=2)
+    
+    # Format x-axis as integers (no decimals)
+    ax = plt.gca()
+    ax.xaxis.set_major_formatter(plt.FuncFormatter(lambda x, p: f'{int(x)}'))
+    
+    # Format y-axis as percentages
+    ax.yaxis.set_major_formatter(plt.FuncFormatter(lambda y, p: f'{y:.1f}%'))
     
     plt.xlabel("Year", fontsize=12)
-    plt.ylabel("Theme Score", fontsize=12)
+    plt.ylabel("Theme Score (%)", fontsize=12)
     plt.title(f"{theme} Risk Theme Over Time", fontsize=14, fontweight="bold")
     plt.legend()
     plt.grid(True, alpha=0.3)
