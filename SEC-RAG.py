@@ -4,7 +4,7 @@ Legacy wrapper for SEC-RAG.py - redirects to new modular CLI.
 This file is maintained for backward compatibility.
 For new usage, use: python -m sec_rag.cli <command>
 """
-
+#test
 import os
 import sys
 
